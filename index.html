@@ -1,54 +1,284 @@
-<h1 class="center">विश्व🌏︎संकेत</h1>
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Sanket</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="Your name" />
-    <meta name="description" content="Brief description" />
-    <meta property="og:title" content="Your Page Title" />
-    <meta property="og:description" content="Brief description" />
-    <meta property="og:image" content="/some-image.png" />
-    <meta property="og:url" content="/this-page.html" />
-    <meta property="og:site_name" content="Your Site Name" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image:alt" content="image description" />
-    <link href="style.css" rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  </head>
+<html>
 
-  <body>
-    <a href="Geo-Pincode.html">Giopin</a>
-    <header>
-      <p>चरैवेति चरैवेति... 
-      </p>
-      <br>
-      <img width= "1400" height="720" src="https://wallpapers.com/images/featured/encouraging-quotes-6xw934j9gk2r67yh.jpg">
-    </header>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
 
-    <main>
-      <section id= "Viz">
-        <h2>Welcome to my World 🌏︎</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos illum 
-        </p>
-      </section>
-    </main>
-    <br>
-      <ol>
-        <li><a href= "https://www.instagram.com/sanket_hajaree/">Instagram</a></li>
-        <li><a href= "https://www.linkedin.com/in/sanket-hajare-122295247/">Linkedin</a></li>
-        <li><a href= "https://www.facebook.com/sanket.hajare.737">facebook</a></li>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
 
-      </ol>
-      <br>
-      <br>
-      <br>
-    <footer>
-      Made by Sanket Hajare
-    </footer>
-    <script src="script.js"></script>
-  </body>
+    <style> 
+    
+        body
+         {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        #map {
+            height: 100%;
+            width: 75%;
+            border: 5px solid rgb(160, 18, 18);
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .info {
+            width: 25%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            border-left: 2px solid #ddd;
+        }
+        .info h2 {
+            margin-top: 0;
+        }
+        .info p {
+            margin: 10px 0;
+        }
+        .custom-tooltip {
+            background-color: rgb(160, 18, 18);
+            color: white;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .custom-tooltip b {
+            color: yellow;
+        }
+        .leaflet-control-button {
+            background-color: rgb(160, 18, 18);
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+        }
+        .leaflet-control-search {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            font-size: 16px;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            margin-right: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+<!-- figma code -->
+<div style="width: 1512px; height: 4880px; position: relative; background: #B73737">
+    <div style="width: 1319px; left: 99px; top: 835px; position: absolute"><span style="color: #FFCC48; font-size: 32px; font-family: Inika; font-weight: 400; word-wrap: break-word">Introduction<br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word"><br/>In an era where accurate and efficient addressing is crucial, the traditional PIN code system, though revolutionary at its inception, has started showing limitations in keeping up with the demands of modern urbanization and technological advancements. This is where Giopin comes in – a unique, precise, and easy-to-use addressing system designed to solve these problems.<br/></span></div>
+    <div style="width: 939px; left: 99px; top: 1085px; position: absolute"><span style="color: #FFCC48; font-size: 32px; font-family: Inika; font-weight: 400; word-wrap: break-word">History of Pincode<br/></span><span style="color: white; font-size: 32px; font-family: Inika; font-weight: 400; word-wrap: break-word"><br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word">Introduced in 1972 by Shriram Bhikaji Velankar.<br/>Six-digit system for mail sorting and delivery.<br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word"><br/>      Challenges with Traditional Pincodes<br/><br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word">Urban Expansion: Overlapping PIN codes.<br/>Administrative Changes: Discrepancies from new districts.<br/>Service Disruption: Inaccuracies affecting logistics and emergency services.</span></div>
+    <div style="width: 1319px; height: 188px; left: 99px; top: 1457px; position: absolute"><span style="color: #FFCC48; font-size: 32px; font-family: Inika; font-weight: 400; word-wrap: break-word">Mapping Pincodes and Post Offices<br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word"><br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word">Data Collection: All post offices and pincodes.<br/>Visualization: Distribution and coverage mapping.<br/>Identifying Overlaps and Gaps: Issues of overlapping and insufficient coverage.</span></div>
+    <div style="width: 1319px; left: 99px; top: 3384px; position: absolute"><span style="color: #FFCC48; font-size: 32px; font-family: Inika; font-weight: 700; word-wrap: break-word">GeoPin  <br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word">Giopin was conceived to address the shortcomings of traditional pincodes by leveraging modern geolocation technology. The goal was to create a short, unique code that could pinpoint exact locations, eliminating address ambiguities.<br/><br/>Designing the Algorithm<br/><br/>To develop Giopin, we integrated existing PIN codes with latitude and longitude coordinates:<br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word">Geographical Data: Mapped areas with exact coordinates using geoJSON files.<br/>Algorithm Development: Generated a short code by combining the last four digits of latitude and longitude with the existing PIN code, creating a unique identifier for each location.<br/>Reverse Geocoding: Used APIs to fetch PIN codes based on coordinates.</span></div>
+    <div style="width: 1319px; left: 99px; top: 3857px; position: absolute"><span style="color: #FFCC48; font-size: 32px; font-family: Inika; font-weight: 400; word-wrap: break-word">The Advantages of Giopin<br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word"><br/>Enhanced Accuracy Giopin offers unmatched precision in location identification, crucial for:<br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word">Logistics and Delivery: Ensuring packages reach the correct address.<br/>Emergency Services: Enabling swift and accurate response.<br/>Urban Planning: Aiding in efficient resource allocation and planning.<br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word"><br/>Ease of Use<br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word">User-Friendly: Simple, memorable format.<br/>Versatile: Applicable in both urban and rural areas, adapting to different densities and infrastructures.<br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word">Future-Proofing Addressing As cities grow, Giopin is built to evolve:<br/><br/></span><span style="color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word">Scalable: Handles increasing address data without losing accuracy.<br/>Integrable: Compatible with existing systems and technologies, including IoT and smart city initiatives.</span></div>
+    <div style="width: 1319px; left: 99px; top: 4423px; position: absolute; color: white; font-size: 24px; font-family: Inika; font-weight: 400; word-wrap: break-word">Giopin revolutionizes addressing by merging traditional PIN codes with precise geolocation. Tailored for modern urban needs, it benefits logistics, emergency services, urban planning, and everyday use.<br/></div>
+    <div style="left: 921px; top: 3285px; position: absolute; color: white; font-size: 16px; font-family: Inika; font-weight: 400; word-wrap: break-word">https://x.com/Customized_map/status/1186537808816693249</div>
+    <div style="left: 643px; top: 2320px; position: absolute; color: white; font-size: 18px; font-family: Inika; font-weight: 400; word-wrap: break-word">References: https://www.data.gov.in/resource/all-india-pincode-directory-till-last-month</div>
+    <div style="width: 1319px; left: 83px; top: 4675px; position: absolute; text-align: center; color: white; font-size: 45px; font-family: Inika; font-weight: 400; word-wrap: break-word">Get Your Digi Address </div>
+    <img style="width: 311px; height: 210px; left: 603px; top: 339px; position: absolute" src="images/GeoPIN.png" />
+    <div style="left: 679px; top: 563px; position: absolute; color: #FFCC48; font-size: 28px; font-family: Inter; font-weight: 400; word-wrap: break-word">Your Digi Address</div>
+    <img style="width: 1200px; height: 848px; left: 156px; top: 2395px; position: absolute" src="images/Blr All Pincodes.jpg" />
+    <img style="width: 1200px; height: 584px; left: 156px; top: 1700px; position: absolute" src="images/Xcel.png" />
+    <div style="width: 1241px; height: 887px; left: 135px; top: 2379px; position: absolute; border: 1px #FFCC48 solid"></div>
+    <div style="width: 1241px; height: 628px; left: 135px; top: 1678px; position: absolute; border: 1px #FFCC48 solid"></div>
+    <div style="width: 662px; height: 275px; left: 725px; top: 1074px; position: absolute; border: 1px #FFCC48 solid"></div>
+    <img style="width: 635px; height: 243px; left: 741px; top: 1090px; position: absolute" src="images/pin-code-full-form2.png" />
+  </div>
+
+<!-- figma code -->
+
+    <div class="container">
+        <div id="map"></div>
+        <div class="info">
+            <h2>How GeoPin Works</h2>
+            <p><strong>Generating Your GeoPin</strong></p>
+            <p><strong>Identify Location:</strong> Capture the latitude and longitude coordinates.</p>
+            <p><strong>Fetch Pincode:</strong> Use reverse geocoding to find the relevant PIN code.</p>
+            <p><strong>Create Short Code:</strong> Combine the PIN code with the last four digits of latitude and longitude.</p>
+        </div>
+    </div>
+
+    <script>
+        var map = L.map('map').setView([12.973686337229521, 77.59736308365355], 11);    
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        let marker, circle, zoomed;
+
+        navigator.geolocation.watchPosition(success, error);
+
+        function success(pos) {
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+            const accuracy = pos.coords.accuracy;
+
+            if (marker) {
+                map.removeLayer(marker);
+                map.removeLayer(circle);
+            }
+
+            marker = L.marker([lat, lng]).addTo(map);
+            circle = L.circle([lat, lng], { radius: accuracy }).addTo(map);
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
+                .then(response => response.json())
+                .then(data => {
+                    const pincode = data.address.postcode;
+                    const shortCode = generateShortCode(pincode, lat, lng);
+                    const tooltipContent = `<div class="custom-tooltip"><b>You are here</b><br>Pincode: <span style="color: yellow;">${pincode}</span><br>Latitude: ${lat}<br>Longitude: ${lng}<br>My GeoPin: <span style="color: yellow;">${shortCode}</span></div>`;
+                    marker.bindTooltip(tooltipContent, { className: 'custom-tooltip' }).openTooltip();
+                })
+                .catch(error => {
+                    const shortCode = generateShortCode("Unknown", lat, lng);
+                    const tooltipContent = `<div class="custom-tooltip"><b>You are here</b><br>Pincode: <span style="color: yellow;">Unknown</span><br>Latitude: ${lat}<br>Longitude: ${lng}<br>My GeoPin: <span style="color: yellow;">${shortCode}</span></div>`;
+                    marker.bindTooltip(tooltipContent, { className: 'custom-tooltip' }).openTooltip();
+                });
+
+            if (!zoomed) {
+                zoomed = map.fitBounds(circle.getBounds()); 
+            }
+
+            map.setView([lat, lng]);
+        }
+
+        function error(err) {
+            if (err.code === 1) {
+                alert("Please allow geolocation access");
+            } else {
+                alert("Cannot get current location");
+            }
+        }
+
+        function generateShortCode(pincode, lat, lng) {
+            const latStr = lat.toString().split('.').join('').slice(-4);
+            const lngStr = lng.toString().split('.').join('').slice(-4);
+            const shortCode = `${pincode}-${latStr}-${lngStr}`;
+            return shortCode;
+        }
+
+        // Custom Leaflet Control for Buttons and Search
+        L.Control.Button = L.Control.extend({
+            onAdd: function(map) {
+                var container = L.DomUtil.create('div');
+                var btnGetName = L.DomUtil.create('button', 'leaflet-control-button', container);
+                var btnCopyGeoPin = L.DomUtil.create('button', 'leaflet-control-button', container);
+                var searchInput = L.DomUtil.create('input', 'leaflet-control-search', container);
+                var btnSearchGeoPin = L.DomUtil.create('button', 'leaflet-control-button', container);
+
+                btnGetName.innerHTML = 'Get Location Name';
+                btnCopyGeoPin.innerHTML = 'Copy My GeoPin';
+                searchInput.placeholder = 'Enter GeoPin';
+                btnSearchGeoPin.innerHTML = 'Search GeoPin';
+
+                btnGetName.onclick = function() {
+                    if (marker) {
+                        const latlng = marker.getLatLng();
+                        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latlng.lat}&lon=${latlng.lng}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const locationName = data.display_name;
+                                alert(`Location Name: ${locationName}`);
+                            })
+                            .catch(error => {
+                                alert('Error fetching location name');
+                            });
+                    } else {
+                        alert('No location data available');
+                    }
+                };
+
+                btnCopyGeoPin.onclick = function() {
+                    if (marker) {
+                        const latlng = marker.getLatLng();
+                        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latlng.lat}&lon=${latlng.lng}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const pincode = data.address.postcode || 'Unknown';
+                                const shortCode = generateShortCode(pincode, latlng.lat, latlng.lng);
+                                navigator.clipboard.writeText(shortCode).then(function() {
+                                    alert('GeoPin copied to clipboard: ' + shortCode);
+                                }, function(err) {
+                                    alert('Could not copy GeoPin');
+                                });
+                            })
+                            .catch(error => {
+                                const shortCode = generateShortCode("Unknown", latlng.lat, lng.lng);
+                                navigator.clipboard.writeText(shortCode).then(function() {
+                                    alert('GeoPin copied to clipboard: ' + shortCode);
+                                }, function(err) {
+                                    alert('Could not copy GeoPin');
+                                });
+                            });
+                    } else {
+                        alert('No location data available');
+                    }
+                };
+
+                btnSearchGeoPin.onclick = function() {
+                    const geoPin = searchInput.value;
+                    const [pincode, latStr, lngStr] = geoPin.split('-');
+                    const lat = parseFloat(`0.${latStr}`);
+                    const lng = parseFloat(`0.${lngStr}`);
+
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        const latFull = lat + Math.floor(lat);
+                        const lngFull = lng + Math.floor(lng);
+                        if (marker) {
+                            map.removeLayer(marker);
+                        }
+                        marker = L.marker([latFull, lngFull]).addTo(map);
+                        marker.bindTooltip(`<div class="custom-tooltip"><b>GeoPin Location</b><br>GeoPin: <span style="color: yellow;">${geoPin}</span></div>`, { className: 'custom-tooltip' }).openTooltip();
+                        map.setView([latFull, lngFull], 15);
+
+                        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latFull}&lon=${lngFull}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const pincode = data.address.postcode || 'Unknown';
+                                const shortCode = generateShortCode(pincode, latFull, lngFull);
+                                const tooltipContent = `<div class="custom-tooltip"><b>Location Found</b><br>Pincode: <span style="color: yellow;">${pincode}</span><br>Latitude: ${latFull}<br>Longitude: ${lngFull}<br>My GeoPin: <span style="color: yellow;">${shortCode}</span></div>`;
+                                marker.bindTooltip(tooltipContent, { className: 'custom-tooltip' }).openTooltip();
+                            })
+                            .catch(error => {
+                                const shortCode = generateShortCode("Unknown", latFull, lngFull);
+                                const tooltipContent = `<div class="custom-tooltip"><b>Location Found</b><br>Pincode: <span style="color: yellow;">Unknown</span><br>Latitude: ${latFull}<br>Longitude: ${lngFull}<br>My GeoPin: <span style="color: yellow;">${shortCode}</span></div>`;
+                                marker.bindTooltip(tooltipContent, { className: 'custom-tooltip' }).openTooltip();
+                            });
+                    } else {
+                        alert('Invalid GeoPin format');
+                    }
+                };
+
+                return container;
+            },
+
+            onRemove: function(map) {
+                // Nothing to do here
+            }
+        });
+
+        // Add the custom button control to the map
+        L.control.button = function(opts) {
+            return new L.Control.Button(opts);
+        }
+        L.control.button({ position: 'topright' }).addTo(map);
+
+    </script>
+</body>
+
 </html>
